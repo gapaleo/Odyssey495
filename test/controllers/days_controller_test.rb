@@ -23,17 +23,19 @@ class DaysControllerTest < ActionController::TestCase
     assert_select "title", "Odyssey | Add New Day"
   end
 
+  # Bill: I modified this test. It was creating a Day in the past and failing.
+  # I bumped the day up about 10 years. So, in a decade this test will fail again.
   test "should create day and not create duplicate" do
     log_in_as(users(:bill))
     
     assert_difference('Day.count') do
-      post :create, { month:"June" , day:12 , year: 2016}
+      post :create, { month:"December" , day:31 , year: 2026}
     end
     
     assert_redirected_to days_path
     
     assert_no_difference('Day.count') do
-      post :create, { month:"June" , day:12 , year: 2016}
+      post :create, { month:"December" , day:31 , year: 2026}
     end
 
     assert_redirected_to days_new_url
